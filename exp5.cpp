@@ -1,71 +1,78 @@
-#include <iostream>
-#include <vector>
+//Three lists are maintained with the integer rollnos of student, one list contains the rollno and name and
+// second list contains roll no and course name third list contains roll no and cgpa. find a common way to check common roll nos in three lists
 
-bool binarySearch(const std::vector<int>& list, int target) {
-    int left = 0;
-    int right = list.size() - 1;
-    
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        
-        if (list[mid] == target) {
-            return true; 
-        }
-        else if (list[mid] < target) {
-            left = mid + 1;
-        }
-        else {
-            right = mid - 1;
-        }
-    }
-    
-    return false;  
-}
-void checkRollNumbers(const std::vector<int>& rollNames, const std::vector<int>& courseNames, const std::vector<int>& CGPAs) {
-    int rollNo;
-    std::cout << "Enter roll number to search: ";
-    std::cin >> rollNo;
-    
-    if (binarySearch(courseNames, rollNo) && binarySearch(CGPAs, rollNo)) {
-        std::cout << "Roll No: " << rollNo << std::endl;
-    }
-    else {
-        std::cout << "Roll number not found." << std::endl;
-    }
-}
+#include <iostream>
+#include <unordered_set>
+using namespace std;
 
 int main() {
-    std::vector<int> rollNames;
-    std::vector<int> courseNames;
-    std::vector<int> CGPAs;
-    
-    int rollNo;
-    int courseNo;
-    int CGPA;
-    int n;
-    
-    std::cout << "Enter the number of students: ";
-    std::cin >> n;
-    
-    std::cout << "Enter roll numbers and names of students:" << std::endl;
-    for (int i = 0; i < n; ++i) {
-        std::cin >> rollNo;
-        rollNames.push_back(rollNo);
+    unordered_set<int> rollnoSet;
+    unordered_set<int> commonRollnos;
+
+    int rollnoNameSize, rollnoCourseSize, rollnoCgpaSize;
+
+    cout << "Enter the number of roll numbers and names: ";
+    cin >> rollnoNameSize;
+
+    int* rollnoNameList = new int[rollnoNameSize];
+    cout << "Enter the roll numbers and names: ";
+    for (int i = 0; i < rollnoNameSize; i++) {
+        cin >> rollnoNameList[i];
     }
-    
-    std::cout << "Enter roll numbers and course names for students:" << std::endl;
-    for (int i = 0; i < n; ++i) {
-        std::cin >> rollNo >> courseNo;
-        courseNames.push_back(rollNo);
+
+    cout << "Enter the number of roll numbers and course names: ";
+    cin >> rollnoCourseSize;
+
+    int* rollnoCourseList = new int[rollnoCourseSize];
+    cout << "Enter the roll numbers and course names: ";
+    for (int i = 0; i < rollnoCourseSize; i++) {
+        cin >> rollnoCourseList[i];
     }
-    
-    std::cout << "Enter roll numbers and CGPA of students:" << std::endl;
-    for (int i = 0; i < n; ++i) {
-        std::cin >> rollNo >> CGPA;
-        CGPAs.push_back(rollNo);
+
+    cout << "Enter the number of roll numbers and CGPA: ";
+    cin >> rollnoCgpaSize;
+
+    int* rollnoCgpaList = new int[rollnoCgpaSize];
+    cout << "Enter the roll numbers and CGPA: ";
+    for (int i = 0; i < rollnoCgpaSize; i++) {
+        cin >> rollnoCgpaList[i];
     }
-    
-    checkRollNumbers(rollNames, courseNames, CGPAs);
-    
+
+    // Add roll numbers from List 1 to the set
+    for (int i = 0; i < rollnoNameSize; i++) {
+        rollnoSet.insert(rollnoNameList[i]);
+    }
+
+    // Check for common roll numbers in List 2 and List 3
+    for (int i = 0; i < rollnoCourseSize; i++) {
+        if (rollnoSet.count(rollnoCourseList[i]) > 0) {
+            commonRollnos.insert(rollnoCourseList[i]);
+        }
+    }
+
+    rollnoSet.clear();
+
+    // Add roll numbers from List 2 to the set
+    for (int i = 0; i < rollnoCourseSize; i++) {
+        rollnoSet.insert(rollnoCourseList[i]);
+    }
+
+    // Check for common roll numbers in List 3
+    for (int i = 0; i < rollnoCgpaSize; i++) {
+        if (rollnoSet.count(rollnoCgpaList[i]) > 0) {
+            commonRollnos.insert(rollnoCgpaList[i]);
+        }
+    }
+
+    cout << "Common Roll Numbers: ";
+    for (int rollno : commonRollnos) {
+        cout << rollno << " ";
+    }
+    cout << endl;
+
+    delete[] rollnoNameList;
+    delete[] rollnoCourseList;
+    delete[] rollnoCgpaList;
+
     return 0;
 }

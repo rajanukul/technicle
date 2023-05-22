@@ -1,4 +1,5 @@
-//list of marks obtained by students of your class is maintained in form of linkedlist. Apply a sorting algorithm which has the complexity of O(n2) to sort the list
+// list of marks obtained by students of your class is maintained in form of linkedlist. 
+// Apply a sorting algorithm which has the complexity of O(n2) to sort the list
 
 
 

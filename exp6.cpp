@@ -1,3 +1,6 @@
+// A set of strings are saved in a data structure. Represent the string in form of non-linear data structurein such a way that searching takes minimal time.
+
+
 #include <iostream>
 #include <unordered_map>
 
